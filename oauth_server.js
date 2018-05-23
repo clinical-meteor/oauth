@@ -362,12 +362,12 @@ var renderEndOfLoginResponse = function (options) {
 
   console.log('template()', template);
   console.log('__meteor_runtime_config__.ROOT_URL_PATH_PREFIX', __meteor_runtime_config__.ROOT_URL_PATH_PREFIX);
-  console.log('node.env.ROOT_URL_PATH_PREFIX', node.env.ROOT_URL_PATH_PREFIX);
-  console.log('node.env.ROOT_URL', node.env.ROOT_URL);
+  console.log('process.env.ROOT_URL_PATH_PREFIX', process.env.ROOT_URL_PATH_PREFIX);
+  console.log('process.env.ROOT_URL', process.env.ROOT_URL);
 
   var templateContents = template.replace(/##CONFIG##/, JSON.stringify(config))
     .replace(
-      /##ROOT_URL_PATH_PREFIX##/, __meteor_runtime_config__.ROOT_URL_PATH_PREFIX
+      /##ROOT_URL_PATH_PREFIX##/, process.env.ROOT_URL
     );
 
   var loginResultHtml = "<!DOCTYPE html>\n" + templateContents; 
