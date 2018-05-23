@@ -48,7 +48,7 @@ OAuth.registerService = function (name, version, urls, handleOauthRequest) {
 };
 
 // For test cleanup.
-OAuthTest.unregisterService = function (name) {
+OAuth.unregisterService = function (name) {
   delete registeredServices[name];
 };
 
@@ -304,11 +304,9 @@ OAuth._renderOauthResults = function(res, query, credentialSecret) {
 // This "template" (not a real Spacebars template, just an HTML file
 // with some ##PLACEHOLDER##s) communicates the credential secret back
 // to the main window and then closes the popup.
-OAuth._endOfPopupResponseTemplate = Assets.getText(
-  "end_of_popup_response.html");
+OAuth._endOfPopupResponseTemplate = Assets.getText("end_of_popup_response.html");
 
-OAuth._endOfRedirectResponseTemplate = Assets.getText(
-  "end_of_redirect_response.html");
+OAuth._endOfRedirectResponseTemplate = Assets.getText("end_of_redirect_response.html");
 
 // Renders the end of login response template into some HTML and JavaScript
 // that closes the popup or redirects at the end of the OAuth flow.
@@ -362,12 +360,19 @@ var renderEndOfLoginResponse = function (options) {
     throw new Error('invalid loginStyle: ' + options.loginStyle);
   }
 
-  var result = template.replace(/##CONFIG##/, JSON.stringify(config))
+  console.log('template()', template);
+  console.log('__meteor_runtime_config__.ROOT_URL_PATH_PREFIX', __meteor_runtime_config__.ROOT_URL_PATH_PREFIX);
+  console.log('node.env.ROOT_URL_PATH_PREFIX', node.env.ROOT_URL_PATH_PREFIX);
+  console.log('node.env.ROOT_URL', node.env.ROOT_URL);
+
+  var templateContents = template.replace(/##CONFIG##/, JSON.stringify(config))
     .replace(
       /##ROOT_URL_PATH_PREFIX##/, __meteor_runtime_config__.ROOT_URL_PATH_PREFIX
     );
 
-  return "<!DOCTYPE html>\n" + result;
+  var loginResultHtml = "<!DOCTYPE html>\n" + templateContents; 
+  console.log('loginResultHtml', loginResultHtml)
+  return loginResultHtml;
 };
 
 // Writes an HTTP response to the popup window at the end of an OAuth
