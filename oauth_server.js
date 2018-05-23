@@ -410,10 +410,14 @@ var renderEndOfLoginResponse = function (options) {
 OAuth._endOfLoginResponse = function (res, details) {
   process.env.DEBUG && console.log("OAuth._endOfLoginResponse()", details);
 
+  // set some headers
   // we should replace * with get(Meteor, 'settings.baseUrl')
   res.writeHead(200, {
     'Content-Type': 'text/html',
-    'Access-Control-Allow-Origin': '*'
+    'X-Frame-Options': 'ALLOWALL',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, GET',
+    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
   });
 
   var redirectUrl;
