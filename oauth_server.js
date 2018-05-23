@@ -320,7 +320,7 @@ OAuth._endOfRedirectResponseTemplate = Assets.getText("end_of_redirect_response.
 //   - isCordova (boolean)
 //
 var renderEndOfLoginResponse = function (options) {
-  console.log('renderEndOfLoginResponse()');
+  process.env.DEBUG && console.log('renderEndOfLoginResponse()');
 
   // It would be nice to use Blaze here, but it's a little tricky
   // because our mustaches would be inside a <script> tag, and Blaze
@@ -360,10 +360,10 @@ var renderEndOfLoginResponse = function (options) {
     throw new Error('invalid loginStyle: ' + options.loginStyle);
   }
 
-  console.log('template()', template);
-  console.log('__meteor_runtime_config__.ROOT_URL_PATH_PREFIX', __meteor_runtime_config__.ROOT_URL_PATH_PREFIX);
-  console.log('process.env.ROOT_URL_PATH_PREFIX', process.env.ROOT_URL_PATH_PREFIX);
-  console.log('process.env.ROOT_URL', process.env.ROOT_URL);
+  process.env.DEBUG && console.log('template()', template);
+  process.env.DEBUG && console.log('__meteor_runtime_config__.ROOT_URL_PATH_PREFIX', __meteor_runtime_config__.ROOT_URL_PATH_PREFIX);
+  process.env.DEBUG && console.log('process.env.ROOT_URL_PATH_PREFIX', process.env.ROOT_URL_PATH_PREFIX);
+  process.env.DEBUG && console.log('process.env.ROOT_URL', process.env.ROOT_URL);
 
   var templateContents = template.replace(/##CONFIG##/, JSON.stringify(config))
     .replace(
@@ -371,7 +371,8 @@ var renderEndOfLoginResponse = function (options) {
     );
 
   var loginResultHtml = "<!DOCTYPE html>\n" + templateContents; 
-  console.log('loginResultHtml', loginResultHtml)
+
+  process.env.DEBUG && console.log('loginResultHtml', loginResultHtml)
   return loginResultHtml;
 };
 
@@ -409,7 +410,11 @@ var renderEndOfLoginResponse = function (options) {
 OAuth._endOfLoginResponse = function (res, details) {
   process.env.DEBUG && console.log("OAuth._endOfLoginResponse()", details);
 
-  res.writeHead(200, {'Content-Type': 'text/html'});
+  // we should replace * with get(Meteor, 'settings.baseUrl')
+  res.writeHead(200, {
+    'Content-Type': 'text/html',
+    'Access-Control-Allow-Origin': '*'
+  });
 
   var redirectUrl;
   if (details.loginStyle === 'redirect') {
