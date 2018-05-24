@@ -423,7 +423,11 @@ OAuth._endOfLoginResponse = function (res, details) {
   var redirectUrl;
   if (details.loginStyle === 'redirect') {
     redirectUrl = OAuth._stateFromQuery(details.query).redirectUrl;
+    process.env.DEBUG && console.log('redirectUrl', redirectUrl);
+
     var appHost = Meteor.absoluteUrl();
+
+    process.env.DEBUG && console.log('appHost', appHost);
     if (OAuth._checkRedirectUrlOrigin(redirectUrl)) {
       details.error = "redirectUrl (" + redirectUrl +
         ") is not on the same host as the app (" + appHost + ")";
