@@ -4,7 +4,7 @@ OAuth._storageTokenPrefix = "Meteor.oauth.credentialSecret-";
 
 OAuth._redirectUri = function (serviceName, config, params, absoluteUrlOptions) {
   if(get(Meteor, 'settings.public.logging') === "debug"){
-    process.env.DEBUG && console.log('OAuth._redirectUri()');
+    process.env.DEBUG && console.log('S10.1.1 OAuth._redirectUri()');
   }
   
   // XXX COMPAT WITH 0.9.0

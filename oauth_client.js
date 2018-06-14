@@ -20,7 +20,7 @@ OAuth.showPopup = function (url, callback, dimensions) {
 //
 OAuth._loginStyle = function (service, config, options) {
   if(get(Meteor, 'settings.public.logging') === "debug"){
-    console.log('OAuth._loginStyle', service, config, options)
+    console.log('C5.     Determining which login style to use.')
   }  
 
   if (Meteor.isCordova) {
@@ -48,10 +48,6 @@ OAuth._loginStyle = function (service, config, options) {
 };
 
 OAuth._stateParam = function (loginStyle, credentialToken, redirectUrl) {
-  if(get(Meteor, 'settings.public.logging') === "debug"){
-    console.log('OAuth._stateParam', redirectUrl)
-  }  
-
   var state = {
     loginStyle: loginStyle,
     credentialToken: credentialToken,
@@ -61,6 +57,10 @@ OAuth._stateParam = function (loginStyle, credentialToken, redirectUrl) {
   if (loginStyle === 'redirect')
     state.redirectUrl = redirectUrl || ('' + window.location);
 
+  if(get(Meteor, 'settings.public.logging') === "debug"){
+    console.log('C6.     Encoding state as base64 JSON', state)
+  }  
+  
   // Encode base64 as not all login services URI-encode the state
   // parameter when they pass it back to us.
   // Use the 'base64' package here because 'btoa' isn't supported in IE8/9.
@@ -132,14 +132,14 @@ OAuth.getDataAfterRedirect = function () {
 //
 OAuth.launchLogin = function (options) {
   if(get(Meteor, 'settings.public.logging') === "debug"){
-    console.log('OAuth.launchLogin', options);
+    console.log('C7.1    Launching OAuth login.', options);
   }  
 
   if (! options.loginService)
     throw new Error('loginService required');
   if (options.loginStyle === 'popup') {
     if(get(Meteor, 'settings.public.logging') === "debug"){
-      console.log('show popup...')
+      console.log('C7.2.   Showing the popup window...')
     }  
     OAuth.showPopup(
       options.loginUrl,
@@ -186,7 +186,7 @@ OAuth._handleCredentialSecret = function (credentialToken, secret) {
 // corresponding to credential secret to call the `login` method over DDP.
 OAuth._retrieveCredentialSecret = function (credentialToken) {
   if(get(Meteor, 'settings.public.logging') === "debug"){
-    console.log('OAuth._retrieveCredentialSecret', credentialToken)
+    console.log('C10.    Retrieving credential secret', credentialToken)
   }  
 
   // First check the secrets collected by OAuth._handleCredentialSecret,

@@ -12,7 +12,7 @@ import { get } from 'lodash';
 //   the popup. If not passed defaults to something sane.
 OAuth.showPopup = function (url, callback, dimensions) {
   if(get(Meteor, 'settings.public.logging') === "debug"){
-    console.log('OAuth.showPopup', url);
+    console.log('C8.1    OAuth.showPopup', url);
   }
 
   // default dimensions that worked well for facebook and google
@@ -39,7 +39,7 @@ OAuth.showPopup = function (url, callback, dimensions) {
     if (popupClosed) {
       clearInterval(checkPopupOpen);
       if(get(Meteor, 'settings.public.logging') === "debug"){
-        console.log('OAuth.showPopup().setInterval.callback()');
+        console.log('C8.2    Popup closed.  Running callback method.');
       } 
       callback();
     }
@@ -48,7 +48,7 @@ OAuth.showPopup = function (url, callback, dimensions) {
 
 var openCenteredPopup = function(url, width, height) {
   if(get(Meteor, 'settings.public.logging') === "debug"){
-    console.log('OAuth.openCenteredPopup', url, width, height);
+    console.log('C8.1.1  Opening the centered popup', url);
   } 
   
   var screenX = typeof window.screenX !== 'undefined'

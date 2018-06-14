@@ -44,10 +44,10 @@ var _cleanupHandle = Meteor.setInterval(_cleanStaleResults, 60 * 1000);
 //
 OAuth._storePendingCredential = function (key, credential, credentialSecret) {
   process.env.DEBUG && console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^')
-  process.env.DEBUG && console.log('OAuth._storePendingCredential()')
-  process.env.DEBUG && console.log('OAuth._storePendingCredential().key', key)
-  process.env.DEBUG && console.log('OAuth._storePendingCredential().credential', credential)
-  process.env.DEBUG && console.log('OAuth._storePendingCredential().credentialSecret', credentialSecret)
+  process.env.DEBUG && console.log('S13. OAuth._storePendingCredential()')
+  process.env.DEBUG && console.log('S13. OAuth._storePendingCredential().key', key)
+  process.env.DEBUG && console.log('S13. OAuth._storePendingCredential().credential', credential)
+  process.env.DEBUG && console.log('S13. OAuth._storePendingCredential().credentialSecret', credentialSecret)
 
   check(key, String);
   check(credentialSecret, Match.Optional(String));
@@ -65,7 +65,7 @@ OAuth._storePendingCredential = function (key, credential, credentialSecret) {
     createdAt: new Date()
   };
 
-  process.env.DEBUG && console.log('OAuth._storePendingCredential().newPendingCredential', newPendingCredential)
+  process.env.DEBUG && console.log('S13. OAuth._storePendingCredential().newPendingCredential', newPendingCredential)
 
   // We do an upsert here instead of an insert in case the user happens
   // to somehow send the same `state` parameter twice during an OAuth
@@ -74,11 +74,11 @@ OAuth._storePendingCredential = function (key, credential, credentialSecret) {
     key: key
   }, newPendingCredential, function(error){
     if(error){
-      process.env.DEBUG && console.log('OAuth._pendingCredentials.upsert().error', error)
+      process.env.DEBUG && console.log('S13.1. OAuth._pendingCredentials.upsert().error', error)
     }
   });
 
-  console.log('OAuth._pendingCredentials.find().fetch()', OAuth._pendingCredentials.find().fetch())
+  console.log('S13. OAuth._pendingCredentials.find().fetch()', OAuth._pendingCredentials.find().fetch())
 };
 
 // Retrieves and removes a credential from the _pendingCredentials collection
