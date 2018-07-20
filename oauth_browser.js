@@ -1,4 +1,5 @@
 import { get } from 'lodash';
+import { Meteor } from 'meteor/meteor';
 
 // Browser specific code for the OAuth package.
 
@@ -12,14 +13,15 @@ import { get } from 'lodash';
 //   the popup. If not passed defaults to something sane.
 OAuth.showPopup = function (url, callback, dimensions) {
   if(get(Meteor, 'settings.public.logging') === "debug"){
-    console.log('C8.1    OAuth.showPopup', url);
+    console.log('C8.1    OAuth.showPopup', url, dimensions);
   }
+
 
   // default dimensions that worked well for facebook and google
   var popup = openCenteredPopup(
     url,
-    (dimensions && dimensions.width) || 650,
-    (dimensions && dimensions.height) || 331
+    (dimensions && dimensions.width) || 480,
+    (dimensions && dimensions.height) || 600
   );
 
   var checkPopupOpen = setInterval(function() {
@@ -48,23 +50,21 @@ OAuth.showPopup = function (url, callback, dimensions) {
 
 var openCenteredPopup = function(url, width, height) {
   if(get(Meteor, 'settings.public.logging') === "debug"){
-    console.log('C8.1.1  Opening the centered popup', url);
+    console.log('C8.1.1  Opening the centered popup', url, width, height);
   } 
   
-  var screenX = typeof window.screenX !== 'undefined'
-        ? window.screenX : window.screenLeft;
-  var screenY = typeof window.screenY !== 'undefined'
-        ? window.screenY : window.screenTop;
-  var outerWidth = typeof window.outerWidth !== 'undefined'
-        ? window.outerWidth : document.body.clientWidth;
-  var outerHeight = typeof window.outerHeight !== 'undefined'
-        ? window.outerHeight : (document.body.clientHeight - 22);
+  var screenX = typeof window.screenX !== 'undefined' ? window.screenX : window.screenLeft;
+  var screenY = typeof window.screenY !== 'undefined' ? window.screenY : window.screenTop;
+  var outerWidth = typeof window.outerWidth !== 'undefined' ? window.outerWidth : document.body.clientWidth;
+  var outerHeight = typeof window.outerHeight !== 'undefined' ? window.outerHeight : (document.body.clientHeight - 22);
   // XXX what is the 22?
 
   // Use `outerWidth - width` and `outerHeight - height` for help in
   // positioning the popup centered relative to the current window
   var left = screenX + (outerWidth - width) / 2;
   var top = screenY + (outerHeight - height) / 2;
+
+
   var features = ('width=' + width + ',height=' + height +
                   ',left=' + left + ',top=' + top + ',scrollbars=yes');
 
