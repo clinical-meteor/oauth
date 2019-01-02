@@ -93,7 +93,7 @@ OAuth.saveDataForRedirect = function (loginService, credentialToken) {
 //
 OAuth.getDataAfterRedirect = function () {
   if(get(Meteor, 'settings.public.logging') === "debug"){
-    console.log('OAuth.getDataAfterRedirect')
+    console.log('Authentication subsystem online and ready for requests.')
   }  
 
   var migrationData = Reload._migrationData('oauth');
