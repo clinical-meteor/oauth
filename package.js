@@ -1,7 +1,7 @@
 Package.describe({
   name: 'clinical:oauth',
   summary: "Common code for OAuth-based services in the clinical setting.",
-  version: "1.2.29",
+  version: "1.2.30",
   git: 'https://github.com/clinical-meteor/oauth'
 });
 
@@ -66,3 +66,7 @@ Package.onTest(function (api) {
 Cordova.depends({
   'cordova-plugin-inappbrowser': '1.7.1'
 });
+
+Npm.depends({
+  "btoa": "1.2.1"
+})

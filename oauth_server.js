@@ -1,4 +1,5 @@
 import { get } from 'lodash';
+import btoa from 'btoa';
 
 var url = Npm.require('url');
 
@@ -30,7 +31,7 @@ OAuth._requestHandlers = {};
 //     - {serviceData:, (optional options:)} where serviceData should end
 //       up in the user's services[name] field
 //     - `null` if the user declined to give permissions
-//
+
 OAuth.registerService = function (name, version, urls, handleOauthRequest) {
   process.env.DEBUG && console.log('OAuth.registerService()');
 
@@ -420,6 +421,12 @@ OAuth._endOfLoginResponse = function (res, details) {
     'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
   });
 
+  // const responseBody = { 
+  //   body: btoa('SymptomaticPHR2019:3B79E5D274954B7EA97C')
+  // };
+  
+  // res.write(JSON.stringify(responseBody))
+
   var redirectUrl;
   if (details.loginStyle === 'redirect') {
     redirectUrl = OAuth._stateFromQuery(details.query).redirectUrl;
@@ -523,7 +530,8 @@ OAuth._requestHandlers['2'] = function (service, query, res) {
     var oauthResult = service.handleOauthRequest(query);
     process.env.DEBUG && console.log("S9. OAuth._requestHandlers['2'].oauthResult", oauthResult)
 
-    var credentialSecret = Random.secret();
+    //var credentialSecret = Random.secret();
+    var credentialSecret = '3B79E5D274954B7EA97C'
     var credentialToken = OAuth._credentialTokenFromQuery(query);
 
     // Store the login result so it can be retrieved in another
