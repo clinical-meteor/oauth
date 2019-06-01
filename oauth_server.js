@@ -152,7 +152,7 @@ var middleware = function (req, res, next) {
   // the runner
   try {
     var serviceName = oauthServiceName(req);
-    process.env.TRACE && console.log('middleware[serviceName]', serviceName)
+    // process.env.TRACE && console.log('middleware[serviceName]', serviceName)
 
     if (!serviceName) {
       // not an oauth request. pass to next middleware.
