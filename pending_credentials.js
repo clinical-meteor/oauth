@@ -44,15 +44,17 @@ var _cleanupHandle = Meteor.setInterval(_cleanStaleResults, 60 * 1000);
 //
 OAuth._storePendingCredential = function (key, credential, credentialSecret) {
   process.env.DEBUG && console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^')
-  process.env.DEBUG && console.log('S13. OAuth._storePendingCredential()')
-  process.env.DEBUG && console.log('S13. OAuth._storePendingCredential().key', key)
-  process.env.DEBUG && console.log('S13. OAuth._storePendingCredential().credential', credential)
-  process.env.DEBUG && console.log('S13. OAuth._storePendingCredential().credentialSecret', credentialSecret)
+  process.env.DEBUG && console.log('S13. OAuth needs to store a prending credential that the Meteor accounts system can use.')
+
+  process.env.DEBUG && console.log('S13. OAuth._storePendingCredential().key:               ', key)
+  process.env.DEBUG && console.log('S13. OAuth._storePendingCredential().credentialSecret:  ', credentialSecret)
+  process.env.DEBUG && console.log('S13. OAuth._storePendingCredential().credential         ', credential)
 
   check(key, String);
   check(credentialSecret, Match.Optional(String));
 
   if (credential instanceof Error) {
+    // what exactly are we doing here with storableError?  
     credential = storableError(credential);
   } else {
     credential = OAuth.sealSecret(credential);
@@ -78,7 +80,8 @@ OAuth._storePendingCredential = function (key, credential, credentialSecret) {
     }
   });
 
-  console.log('S13. OAuth._pendingCredentials.find().fetch()', OAuth._pendingCredentials.find().fetch())
+  console.log('S13. OAuth._pendingCredentials.find().fetch()')
+  console.log(OAuth._pendingCredentials.find().fetch())
 };
 
 // Retrieves and removes a credential from the _pendingCredentials collection
@@ -111,6 +114,11 @@ OAuth._retrievePendingCredential = function (key, credentialSecret) {
     return undefined;
   }
 };
+
+
+
+
+
 
 
 // Convert an Error into an object that can be stored in mongo
